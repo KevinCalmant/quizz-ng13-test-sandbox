@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <h2>Choisissez votre quizz</h2>
+  </div>
+  <div class="row justify-content-center pt-5">
+    <div class="alert alert-primary col-12" role="alert" *ngIf="loading">
+      Chargement...
+    </div>
+    <div class="list-group col-5">
+      <a
+        *ngFor="let quizz of quizzs$ | async"
+        href=""
+        class="list-group-item list-group-item-action"
+        role="button"
+        [attr.aria-label]="quizz.id + ' - ' + quizz.title"
+        [routerLink]="['/quizz', quizz.id]"
+      >
+        {{ quizz.title }}
+      </a>
+    </div>
+  </div>
+</div>
