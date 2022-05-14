@@ -1,0 +1,23 @@
+<div
+  class="custom-control custom-radio"
+  *ngFor="let choice of question.choices"
+>
+  <input
+    type="radio"
+    [id]="'Question' + question.id + 'Reponse' + choice.id"
+    [name]="'Question' + question.id"
+    [value]="choice.id"
+    class="custom-control-input"
+    [disabled]="question.answer !== undefined"
+  />
+  <label
+    class="custom-control-label"
+    [class.good-answer]="question.answer !== null && choice.isExact"
+    [class.wrong-answer]="
+      question.answer !== null && !choice.isExact && selected === choice.id
+    "
+    [for]="'Question' + question.id + 'Reponse' + choice.id"
+  >
+    {{ choice.label }}
+  </label>
+</div>

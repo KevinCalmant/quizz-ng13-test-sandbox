@@ -5,7 +5,7 @@ import { tap } from 'rxjs';
 @Component({
   selector: 'app-quizz-list',
   templateUrl: './quizz-list.component.html',
-  styleUrls: ['./quizz-list.component.css'],
+  styleUrls: ['./quizz-list.component.scss'],
 })
 export class QuizzListComponent {
   loading = true;

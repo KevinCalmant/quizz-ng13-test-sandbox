@@ -5,6 +5,9 @@ import { QuizzService } from '../quizz.service';
 import { delay, of, Subject, take, tap } from 'rxjs';
 import { Quizz } from '../quizz.model';
 import { RouterTestingModule } from '@angular/router/testing';
+import { QuizzComponent } from '../quizz/quizz.component';
+import { QuestionComponent } from '../question/question.component';
+import { AnswerComponent } from '../answer/answer.component';
 
 describe('QuizzListComponent', () => {
   let component: QuizzListComponent;
@@ -26,7 +29,12 @@ describe('QuizzListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [QuizzListComponent],
+      declarations: [
+        QuizzListComponent,
+        QuizzComponent,
+        QuestionComponent,
+        AnswerComponent,
+      ],
       providers: [{ provide: QuizzService, useValue: mockQuizzService }],
     }).compileComponents();
   });
@@ -38,7 +46,6 @@ describe('QuizzListComponent', () => {
   });
 
   it('should create', () => {
-    mockQuizzService.getQuizzs().subscribe(() => console.log(new Date()));
     expect(component).toBeTruthy();
   });
 

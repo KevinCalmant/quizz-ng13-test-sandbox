@@ -1,0 +1,6 @@
+<h2>Question n°{{ number }} : {{ question.title | uppercase }}</h2>
+<em>{{ question.message }}</em>
+<app-answer [question]="question"></app-answer>
+<div class="row mt-3">
+  <button type="button" class="btn btn-primary" role="button">Valider</button>
+</div>

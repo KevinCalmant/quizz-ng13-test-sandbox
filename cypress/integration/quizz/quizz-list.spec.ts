@@ -23,4 +23,11 @@ describe('Quizz List', () => {
       }
     });
   });
+
+  it('Should navigate to quizz when click on any quizz line', () => {
+    cy.get('a[role="button"]').click();
+    cy.location().should((location) =>
+      expect(location.pathname.toString()).match(/([/\w/\d])+/g)
+    );
+  });
 });

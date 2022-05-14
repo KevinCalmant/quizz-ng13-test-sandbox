@@ -21,4 +21,16 @@ export class QuizzService {
       })
     );
   }
+
+  public startQuizz(id: number): Observable<Quizz> {
+    return this._httpClient
+      .get<Quizz>(`${environment.apiurl}/quizz/${id}`)
+      .pipe(
+        // Si une exception est levée
+        catchError((err) => {
+          console.log('Erreur lors de la récupération du Quizz', err);
+          throw err;
+        })
+      );
+  }
 }
