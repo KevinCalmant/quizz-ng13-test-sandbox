@@ -3,7 +3,7 @@
     Chargement...
   </div>
 
-  <ng-container *ngIf="!loading && quizz !== undefined">
+  <ng-container *ngIf="quizz$ | async as quizz">
     <div class="row">
       <h1 aria-label="quizz-title">{{ quizz.title }}</h1>
     </div>

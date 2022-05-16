@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Quizz } from '../quizz.model';
 import { QuizzService } from '../quizz.service';
-import { map, Subject, switchMap, takeUntil } from 'rxjs';
+import { map, Observable, shareReplay, switchMap, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -9,37 +9,24 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './quizz.component.html',
   styleUrls: ['./quizz.component.scss'],
 })
-export class QuizzComponent implements OnInit, OnDestroy {
-  quizz!: Quizz;
+export class QuizzComponent {
+  quizz$: Observable<Quizz>;
   loading = true;
-
-  private readonly _destroy$ = new Subject();
 
   constructor(
     private readonly _quizzService: QuizzService,
     private readonly _route: ActivatedRoute
-  ) {}
-
-  ngOnInit() {
-    this._route.paramMap
-      .pipe(
-        map((params) => params.get('id')),
-        switchMap((id) => {
-          if (id) {
-            return this._quizzService.startQuizz(+id);
-          }
-          throw new Error("There's no id in route");
-        }),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((quizz) => {
-        this.quizz = quizz;
-        this.loading = false;
-      });
-  }
-
-  ngOnDestroy() {
-    this._destroy$.next(true);
-    this._destroy$.complete();
+  ) {
+    this.quizz$ = this._route.paramMap.pipe(
+      map((params) => params.get('id')),
+      switchMap((id) => {
+        if (id) {
+          return this._quizzService.startQuizz(+id);
+        }
+        throw new Error("There's no id in route");
+      }),
+      tap(() => (this.loading = false)),
+      shareReplay(1)
+    );
   }
 }
